@@ -117,7 +117,6 @@ const TodoPage = () => {
   };
   return (
     <div>
-      TodoPage
       <Header />
       <TodoInput
         inputValue={inputValue}
