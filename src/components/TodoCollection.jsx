@@ -19,6 +19,7 @@ const TodoCollection = ({
             onChangeMode={({ id, isEdit }) => {
               onChangeMode?.({ id, isEdit });
             }}
+            onDelete={(id) => onDelete?.(id)}
           />
         );
       })}
