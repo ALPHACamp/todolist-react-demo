@@ -13,6 +13,7 @@ const TodoCollection = ({
         return (
           <TodoItem
             todo={todo}
+            onSave={({ id, title }) => onSave?.({ id, title })}
             onToggleDone={(id) => onToggleDone?.(id)}
             onChangeMode={({ id, isEdit }) => {
               onChangeMode?.({ id, isEdit });
