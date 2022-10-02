@@ -10,7 +10,9 @@ const TodoCollection = ({
   return (
     <div>
       {todos.map((todo) => {
-        return <TodoItem todo={todo} />;
+        return (
+          <TodoItem todo={todo} onToggleDone={(id) => onToggleDone?.(id)} />
+        );
       })}
     </div>
   );
