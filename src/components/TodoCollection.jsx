@@ -11,7 +11,13 @@ const TodoCollection = ({
     <div>
       {todos.map((todo) => {
         return (
-          <TodoItem todo={todo} onToggleDone={(id) => onToggleDone?.(id)} />
+          <TodoItem
+            todo={todo}
+            onToggleDone={(id) => onToggleDone?.(id)}
+            onChangeMode={({ id, isEdit }) => {
+              onChangeMode?.({ id, isEdit });
+            }}
+          />
         );
       })}
     </div>
