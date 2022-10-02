@@ -101,6 +101,7 @@ const TodoPage = () => {
       return prevTodos.map((todo) => {
         if (todo.id === id) {
           return {
+            ...todo,
             id,
             title,
             isEdit: false,
