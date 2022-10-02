@@ -26,6 +26,7 @@ const dummyTodos = [
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
+  const [todos, setTodos] = useState(dummyTodos);
 
   const handleInput = (value) => {
     setInputValue(value);
@@ -35,7 +36,7 @@ const TodoPage = () => {
       TodoPage
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} />
-      <TodoCollection todos={dummyTodos} />
+      <TodoCollection todos={todos} />
       <Footer />
     </div>
   );
