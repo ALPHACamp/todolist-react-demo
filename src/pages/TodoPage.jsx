@@ -1,5 +1,7 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { getTodos } from 'api/todos';
 
 const dummyTodos = [
   {
@@ -115,6 +117,15 @@ const TodoPage = () => {
   const handleDelete = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
+
+  useEffect(() => {
+    getTodos()
+      .then((todos) => {
+        setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <div>
       <Header />
