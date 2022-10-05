@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useContext } from 'react';
-import { register, login, logout } from 'api/auth';
+import { register, login, logout, checkPermission } from 'api/auth';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 
@@ -23,6 +23,18 @@ export const AuthProvider = ({ children }) => {
   const [payload, setPayload] = useState(null);
 
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    const currentToken = localStorage.getItem('authToken');
+    checkPermission(currentToken)
+      .then((isSuccess) => {
+        setIsAuthenticated(isSuccess);
+      })
+      .catch((error) => {
+        setIsAuthenticated(false);
+        console.error(error);
+      });
+  }, [pathname]);
   useEffect(() => {
     if (!authToken) {
       setPayload(null);
