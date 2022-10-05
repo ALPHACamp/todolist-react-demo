@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { register } from 'api/auth';
+import { register, login, logout } from 'api/auth';
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -36,8 +36,23 @@ const AuthProvider = ({ children }) => {
               console.error(error);
             });
         },
-        login: (data) => {},
-        logout: () => {},
+        login: (data) => {
+          login({
+            username: data.username,
+            password: data.password,
+          })
+            .then((res) => {
+              localStorage.setItem('authToken', res.authToken);
+              setAuthToken(res.authToken);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        },
+        logout: () => {
+          logout();
+          setAuthToken(null);
+        },
       }}
     ></AuthContext.Provider>
   );
