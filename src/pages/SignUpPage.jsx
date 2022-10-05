@@ -7,7 +7,7 @@ import {
 import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 
 const SignUpPage = () => {
@@ -15,7 +15,11 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { register } = useAuth();
+  const { isAuthenticated, register } = useAuth();
+
+  if (isAuthenticated) {
+    return <Navigate to="/todos" replace />;
+  }
 
   const handleClick = () => {
     register({ email, username: userName, password });

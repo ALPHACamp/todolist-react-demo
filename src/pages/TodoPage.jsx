@@ -2,6 +2,8 @@ import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getTodos, createTodo, patchTodo, deleteTodo } from 'api/todos';
+import { useAuth } from 'contexts/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const dummyTodos = [
   {
@@ -29,6 +31,8 @@ const dummyTodos = [
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState(dummyTodos);
+
+  const { isAuthenticated } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -162,6 +166,10 @@ const TodoPage = () => {
       })
       .catch((err) => console.error(err));
   }, []);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div>

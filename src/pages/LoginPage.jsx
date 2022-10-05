@@ -7,18 +7,22 @@ import {
 import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
 
   const handleClick = () => {
     login({ username: userName, password });
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/todos" replace />;
+  }
   return (
     <AuthContainer>
       <div>
