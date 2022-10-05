@@ -39,6 +39,10 @@ const AuthProvider = ({ children }) => {
       value={{
         isAuthenticated,
         authToken,
+        currentMember: payload && {
+          id: payload.sub,
+          name: payload.name,
+        },
         register: (data) => {
           register({
             email: data.email,
