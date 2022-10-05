@@ -32,6 +32,8 @@ const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState(dummyTodos);
 
+  const todoNums = todos.length;
+
   const { isAuthenticated } = useAuth();
 
   const handleChange = (value) => {
@@ -187,7 +189,7 @@ const TodoPage = () => {
         onChangeMode={handleChangeMode}
         onDelete={handleDelete}
       />
-      <Footer />
+      <Footer numOfTodos={todoNums} />
     </div>
   );
 };
