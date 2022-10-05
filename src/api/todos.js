@@ -25,6 +25,18 @@ export const createTodo = async (payload) => {
   }
 };
 
-const patchTodo = () => {};
+export const patchTodo = async (payload) => {
+  const { id, title, isDone } = payload;
+  try {
+    const res = await axios.patch(`${baseUrl}/todos/${id}`, {
+      title,
+      isDone,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error('[Patch Todo failed]:', error);
+  }
+};
 
 const deleteTodo = () => {};
