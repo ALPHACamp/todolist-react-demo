@@ -15,7 +15,10 @@ const AuthContext = createContext(defaultAuthContext);
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authToken, setAuthToken] = useState('');
+  const [authToken, setAuthToken] = useState(() => {
+    const token = localStorage.getItem('authToken');
+    return token ?? null;
+  });
   const [payload, setPayload] = useState(null);
 
   useEffect(() => {
