@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { register } from 'api/auth';
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -21,6 +22,22 @@ const AuthProvider = ({ children }) => {
       value={{
         isAuthenticated,
         authToken,
+        register: (data) => {
+          register({
+            email: data.email,
+            username: data.username,
+            password: data.password,
+          })
+            .then(({ authToken }) => {
+              localStorage.setItem('authToken', authToken);
+              setAuthToken(authToken);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        },
+        login: (data) => {},
+        logout: () => {},
       }}
     ></AuthContext.Provider>
   );
