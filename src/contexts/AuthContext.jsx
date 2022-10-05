@@ -32,6 +32,8 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((error) => {
         setIsAuthenticated(false);
+        localStorage.removeItem('authToken');
+        setAuthToken(null);
         console.error(error);
       });
   }, [pathname]);
