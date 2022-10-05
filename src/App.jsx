@@ -6,16 +6,16 @@ import { AuthProvider } from 'contexts/AuthContext';
 function App() {
   return (
     <div className="app">
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <Routes>
             <Route path="todos" element={<TodoPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from 'react';
 import { register, login, logout } from 'api/auth';
 import * as jwt from 'jsonwebtoken';
+import { useLocation } from 'react-router-dom';
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   });
   const [payload, setPayload] = useState(null);
 
+  const { pathname } = useLocation();
   useEffect(() => {
     if (!authToken) {
       setPayload(null);
