@@ -1,7 +1,7 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getTodos, createTodo, patchTodo } from 'api/todos';
+import { getTodos, createTodo, patchTodo, deleteTodo } from 'api/todos';
 
 const dummyTodos = [
   {
@@ -146,8 +146,13 @@ const TodoPage = () => {
       console.error(err);
     }
   };
-  const handleDelete = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      await deleteTodo(id);
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
