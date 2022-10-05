@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, useContext } from 'react';
 import { register, login, logout } from 'api/auth';
 import * as jwt from 'jsonwebtoken';
 
@@ -12,8 +12,8 @@ const defaultAuthContext = {
 };
 
 const AuthContext = createContext(defaultAuthContext);
-
-const AuthProvider = ({ children }) => {
+export const useAuth = () => useContext(AuthContext);
+export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState('');
   const [payload, setPayload] = useState(null);
@@ -75,6 +75,8 @@ const AuthProvider = ({ children }) => {
           setAuthToken(null);
         },
       }}
-    ></AuthContext.Provider>
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
