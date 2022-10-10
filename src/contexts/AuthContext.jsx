@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 const defaultAuthContext = {
   isAuthenticated: false,
   currentMember: null,
+  authToken: null,
   register: null,
   login: null,
   logout: null,
@@ -56,6 +57,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        authToken,
         currentMember: payload && {
           id: payload.sub,
           name: payload.name,

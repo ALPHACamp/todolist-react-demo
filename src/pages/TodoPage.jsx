@@ -11,7 +11,7 @@ const TodoPage = () => {
 
   const todoNums = todos.length;
 
-  const { isAuthenticated, currentMember } = useAuth();
+  const { isAuthenticated, currentMember, authToken } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -23,7 +23,7 @@ const TodoPage = () => {
     }
 
     try {
-      const data = await createTodo({
+      const data = await createTodo(authToken, {
         title: inputValue,
         isDone: false,
       });
@@ -51,7 +51,7 @@ const TodoPage = () => {
     }
 
     try {
-      const data = await createTodo({
+      const data = await createTodo(authToken, {
         title: inputValue,
         isDone: false,
       });
@@ -77,7 +77,7 @@ const TodoPage = () => {
     const currentTodo = todos.find((todo) => todo.id === id);
 
     try {
-      await patchTodo({
+      await patchTodo(authToken, {
         id,
         isDone: !currentTodo.isDone,
       });
@@ -113,7 +113,7 @@ const TodoPage = () => {
   };
   const handleSave = async ({ id, title }) => {
     try {
-      await patchTodo({
+      await patchTodo(authToken, {
         id,
         title,
       });
@@ -131,7 +131,7 @@ const TodoPage = () => {
   };
   const handleDelete = async (id) => {
     try {
-      await deleteTodo(id);
+      await deleteTodo(authToken, id);
       setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     } catch (err) {
       console.error(err);
@@ -139,12 +139,12 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
-    getTodos()
+    getTodos(authToken)
       .then((todos) => {
         setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [authToken]);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
