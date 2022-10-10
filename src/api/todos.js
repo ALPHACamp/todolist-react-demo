@@ -7,7 +7,6 @@ export const getTodos = (authToken) => {
     .get(`${baseUrl}/todos`, {
       headers: {
         Authorization: 'Bearer ' + authToken,
-        Accept: '*/*',
       },
     })
     .then((res) => {
@@ -17,7 +16,6 @@ export const getTodos = (authToken) => {
 };
 
 export const createTodo = async (authToken, payload) => {
-  console.log(payload);
   const { title, isDone } = payload;
 
   try {
