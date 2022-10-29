@@ -7,6 +7,7 @@ import {
 import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');
@@ -38,7 +39,9 @@ const LoginPage = () => {
         />
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
-      <AuthLinkText>註冊</AuthLinkText>
+      <Link to="/signup">
+        <AuthLinkText>註冊</AuthLinkText>
+      </Link>
     </AuthContainer>
   );
 };
