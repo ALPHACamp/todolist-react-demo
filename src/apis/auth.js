@@ -9,14 +9,13 @@ export const login = async (data) => {
       password: data.password,
     });
 
-    const { authToken, user } = res.data;
+    const { authToken } = res.data;
 
     if (authToken) {
-      return res.data;
+      return { success: true, ...res.data };
     }
-
-    throw new Error(res.data);
+    return res.data;
   } catch (error) {
-    return error;
+    console.error('[Login Failed]:', error);
   }
 };
