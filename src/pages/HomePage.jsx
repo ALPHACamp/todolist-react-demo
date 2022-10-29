@@ -1,26 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { checkPermission } from 'apis/auth';
+import { useAuth } from 'contexts/AuthContext';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
-        navigate('/login');
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
-        navigate('/todos');
-      } else {
-        navigate('/login');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate]);
+    if (isAuthenticated) {
+      navigate('/todos');
+    } else {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated]);
 };
 
 export default HomePage;
