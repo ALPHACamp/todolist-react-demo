@@ -3,32 +3,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getTodos, createTodo, patchTodo, deleteTodo } from 'api/todos';
 
-const dummyTodos = [
-  {
-    title: 'Learn react-router',
-    isDone: true,
-    id: 1,
-  },
-  {
-    title: 'Learn to create custom hooks',
-    isDone: false,
-    id: 2,
-  },
-  {
-    title: 'Learn to use context',
-    isDone: true,
-    id: 3,
-  },
-  {
-    title: 'Learn to implement auth',
-    isDone: false,
-    id: 4,
-  },
-];
-
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [todos, setTodos] = useState(dummyTodos);
+  const [todos, setTodos] = useState([]);
+
+  const todoNums = todos.length;
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -62,7 +41,7 @@ const TodoPage = () => {
     }
   };
 
-  const handleKeyPress = async () => {
+  const handleKeyDown = async () => {
     if (inputValue.length === 0) {
       return;
     }
@@ -80,6 +59,7 @@ const TodoPage = () => {
             id: data.id,
             title: data.title,
             isDone: data.isDone,
+            isEdit: false,
           },
         ];
       });
@@ -110,8 +90,8 @@ const TodoPage = () => {
           return todo;
         });
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
   const handleChangeMode = ({ id, isEdit }) => {
@@ -142,25 +122,26 @@ const TodoPage = () => {
           return todo;
         });
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
   const handleDelete = async (id) => {
     try {
       await deleteTodo(id);
       setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    getTodos()
-      .then((todos) => {
-        setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
-      })
-      .catch((err) => console.error(err));
+    const getTodosAsync = async () => {
+      const todos = await getTodos();
+
+      setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
+    };
+    getTodosAsync();
   }, []);
 
   return (
@@ -170,7 +151,7 @@ const TodoPage = () => {
         inputValue={inputValue}
         onChange={handleChange}
         onAddTodo={handleAddTodo}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
       />
       <TodoCollection
         todos={todos}
@@ -179,7 +160,7 @@ const TodoPage = () => {
         onChangeMode={handleChangeMode}
         onDelete={handleDelete}
       />
-      <Footer />
+      <Footer numOfTodos={todoNums} />
     </div>
   );
 };

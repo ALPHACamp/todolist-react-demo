@@ -68,7 +68,7 @@ const StyledAddTodoActionContainer = styled.div`
     }
   }
 `;
-const TodoInput = ({ inputValue, onChange, onKeyPress, onAddTodo }) => {
+const TodoInput = ({ inputValue, onChange, onKeyDown, onAddTodo }) => {
   return (
     <StyledAddTodoContainer
       className={clsx('', { active: inputValue.length > 0 })}
@@ -80,12 +80,12 @@ const TodoInput = ({ inputValue, onChange, onKeyPress, onAddTodo }) => {
           type="text"
           placeholder="新增工作"
           value={inputValue}
-          onChange={(e) => {
-            onChange?.(e.target.value);
+          onChange={(event) => {
+            onChange?.(event.target.value);
           }}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              onKeyPress?.();
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onKeyDown?.();
             }
           }}
         />

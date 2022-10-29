@@ -12,6 +12,7 @@ const TodoCollection = ({
       {todos.map((todo) => {
         return (
           <TodoItem
+            key={todo.id}
             todo={todo}
             onSave={({ id, title }) => onSave?.({ id, title })}
             onToggleDone={(id) => onToggleDone?.(id)}

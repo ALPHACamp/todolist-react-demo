@@ -2,11 +2,13 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost:3004';
 
-export const getTodos = () => {
-  return axios
-    .get(`${baseUrl}/todos`)
-    .then((res) => res.data)
-    .catch((err) => console.error('[Get Todos failed]: ', err));
+export const getTodos = async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/todos`);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Todos failed]: ', error);
+  }
 };
 
 export const createTodo = async (payload) => {
@@ -18,8 +20,8 @@ export const createTodo = async (payload) => {
       isDone,
     });
     return res.data;
-  } catch (err) {
-    console.error('[Create Todo failed]: ', err);
+  } catch (error) {
+    console.error('[Create Todo failed]: ', error);
   }
 };
 
