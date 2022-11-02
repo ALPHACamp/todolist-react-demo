@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
@@ -32,10 +32,16 @@ const StyledButton = styled.button`
 `;
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+  };
   return (
     <StyledFooter>
       <p>剩餘項目數： 0</p>
-      <StyledButton>登出</StyledButton>
+      <StyledButton onClick={handleClick}>登出</StyledButton>
     </StyledFooter>
   );
 };
