@@ -7,13 +7,14 @@ import {
 import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 import Swal from 'sweetalert2';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   const handleClick = async () => {
     if (username.length === 0) {
       return;
@@ -35,6 +36,7 @@ const LoginPage = () => {
         icon: 'success',
         showConfirmButton: false,
       });
+      navigate('/todos');
       return;
     }
     Swal.fire({
