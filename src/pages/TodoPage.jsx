@@ -63,6 +63,7 @@ const TodoPage = () => {
             id: data.id,
             title: data.title,
             isDone: data.isDone,
+            isEdit: false,
           },
         ];
       });
