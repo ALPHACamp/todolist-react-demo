@@ -1,4 +1,4 @@
-import { login, register } from 'api/auth';
+import { login, register, checkPermission } from 'api/auth';
 import { createContext, useState, useEffect } from 'react';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
