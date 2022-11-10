@@ -36,6 +36,7 @@ const LoginPage = () => {
         icon: 'success',
         showConfirmButton: false,
       });
+      navigate('/todos');
       return;
     }
     Swal.fire({
