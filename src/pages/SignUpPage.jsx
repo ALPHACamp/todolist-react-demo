@@ -17,6 +17,16 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('');
 
   const handleClick = async () => {
+    if (username.length === 0) {
+	    return;
+	  }
+	  if (password.length === 0) {
+	    return;
+	  }
+	  if (email.length === 0) {
+	    return;
+	  }
+
     const { success, authToken } = await register({
       username,
       email,
