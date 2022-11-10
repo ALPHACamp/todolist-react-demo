@@ -30,13 +30,12 @@ const SignUpPage = () => {
 	    return;
 	  }
 
-    const { success, authToken } = await register({
+    const success = await register({
       username,
       email,
       password,
     });
     if (success) {
-      localStorage.setItem('authToken', authToken);
       Swal.fire({
         position: 'top',
         title: '註冊成功！',
@@ -44,7 +43,6 @@ const SignUpPage = () => {
         icon: 'success',
         showConfirmButton: false,
       });
-      navigate('/todos');
       return;
     }
     Swal.fire({

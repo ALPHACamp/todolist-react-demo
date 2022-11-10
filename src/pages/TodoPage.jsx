@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getTodos, createTodo, patchTodo, deleteTodo } from 'api/todos';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'contexts/AuthContext';
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState([]);
   const navigate = useNavigate();
-  const { isAuthenticated, currentMember } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const handleChange = (value) => {
     setInputValue(value);

@@ -26,12 +26,11 @@ const LoginPage = () => {
       return;
     }
     
-    const { success, authToken } = await login({
+    const success = await login({
       username,
       password,
     });
     if (success) {
-      localStorage.setItem('authToken', authToken);
       Swal.fire({
         position: 'top',
         title: '登入成功！',
@@ -39,7 +38,6 @@ const LoginPage = () => {
         icon: 'success',
         showConfirmButton: false,
       });
-      navigate('/todos');
       return;
     }
     Swal.fire({
