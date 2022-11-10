@@ -11,6 +11,8 @@ const TodoPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, currentMember } = useAuth();
 
+  const todoNums = todos.length;
+
   const handleChange = (value) => {
     setInputValue(value);
   };
