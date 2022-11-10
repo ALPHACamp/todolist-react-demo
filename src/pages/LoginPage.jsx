@@ -14,14 +14,19 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const handleClick = async () => {
-    try {
-      const { authToken } = await login({
-        username,
-        password,
-      });
+    if (username.length === 0) {
+      return;
+    }
+    if (password.length === 0) {
+      return;
+    }
+    
+    const { success, authToken } = await login({
+      username,
+      password,
+    });
+    if (success) {
       localStorage.setItem('authToken', authToken);
-    } catch (error) {
-      console.error(error);
     }
   };
   return (
