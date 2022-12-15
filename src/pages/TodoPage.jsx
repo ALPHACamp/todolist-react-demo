@@ -1,7 +1,7 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getTodos } from 'api/todos';
+import { getTodos } from '../api/todos';
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -101,10 +101,10 @@ const TodoPage = () => {
     const getTodosAsync = async () => {
       try {
         const todos = await getTodos();
-  
+
         setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
       } catch (error) {
-        console.error (error);
+        console.error(error);
       }
     };
     getTodosAsync();
@@ -126,7 +126,7 @@ const TodoPage = () => {
         onChangeMode={handleChangeMode}
         onDelete={handleDelete}
       />
-      <Footer numOfTodos={todoNums}/>
+      <Footer numOfTodos={todoNums} />
     </div>
   );
 };
