@@ -5,9 +5,9 @@ name: TodoList testing
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/add-ci-pipeline]
   pull_request:
-    branches: [main]
+    branches: [main, feat/add-ci-pipeline]
 
 jobs:
   mac-test-job:
