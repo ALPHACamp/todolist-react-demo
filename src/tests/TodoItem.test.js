@@ -102,13 +102,12 @@ describe('update TodoItem', () => {
 });
 
 describe('delete TodoItem', () => {
-  it('should show the destroy button when hover on item body', () => {
+  it('should delete todo when click on destroy button', () => {
     render(<MockTodoItem />);
     const todoItem = screen.getByTestId('task-item');
     fireEvent.mouseOver(todoItem);
     const deleteBtn = screen.getByTestId('btn-destroy');
     fireEvent.click(deleteBtn);
-    // screen.debug();
     expect(todoItem).not.toBeInTheDocument();
   });
 });

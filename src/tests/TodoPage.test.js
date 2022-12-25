@@ -1,8 +1,8 @@
-import { TodoPage } from '../pages';
-import { getTodos as mockGetTodos } from '../api/todos';
 import { waitFor, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { TodoPage } from '../pages';
 import { AuthContext } from '../contexts/AuthContext';
+import { getTodos as mockGetTodos } from '../api/todos';
 
 const todos = [
   {

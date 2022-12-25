@@ -1,11 +1,9 @@
-import { useAuth } from '../contexts/AuthContext';
-
-import * as auth from '../api/auth';
-import * as jwt from 'jsonwebtoken';
-import { useState } from 'react';
-import { AuthProvider } from 'contexts/AuthContext';
 import { screen, fireEvent, waitFor, render } from '@testing-library/react';
+import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import * as jwt from 'jsonwebtoken';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import * as auth from '../api/auth';
 
 const TestLoginComponent = () => {
   const { isAuthenticated, currentMember, login, logout } = useAuth();
@@ -84,7 +82,7 @@ describe('User can register', () => {
         Promise.resolve(true),
       );
     jest.spyOn(jwt, 'decode').mockImplementation((token) => ({
-      sub: 'test-id',
+      sub: 'mock-id',
       name: 'mock-user',
     }));
     jest
@@ -116,11 +114,11 @@ describe('User can login', () => {
     jest.spyOn(auth, 'login').mockImplementation(({ username, password }) =>
       Promise.resolve({
         success: true,
-        authToken: 'test-token',
+        authToken: 'mock-token',
       }),
     );
     jest.spyOn(jwt, 'decode').mockImplementation((token) => ({
-      sub: 'test-id',
+      sub: 'mock-id',
       name: 'mock-user',
     }));
     jest
@@ -152,11 +150,11 @@ describe('User can logout', () => {
     jest.spyOn(auth, 'login').mockImplementation(({ username, password }) =>
       Promise.resolve({
         success: true,
-        authToken: 'test-token',
+        authToken: 'mock-token',
       }),
     );
     jest.spyOn(jwt, 'decode').mockImplementation((token) => ({
-      sub: 'test-id',
+      sub: 'mock-id',
       name: 'mock-user',
     }));
     jest
