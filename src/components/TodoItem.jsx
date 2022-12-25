@@ -115,6 +115,7 @@ const TodoItem = ({ todo, onSave, onDelete, onToggleDone, onChangeMode }) => {
   };
   return (
     <StyledTaskItem
+      data-testid="task-item"
       className={clsx('', { done: todo.isDone, edit: todo.isEdit })}
     >
       <div className="task-item-checked">
@@ -124,13 +125,17 @@ const TodoItem = ({ todo, onSave, onDelete, onToggleDone, onChangeMode }) => {
         />
       </div>
       <div
+        data-testid="task-item-body"
         className="task-item-body"
         onDoubleClick={() => {
           onChangeMode?.({ id: todo.id, isEdit: true });
         }}
       >
-        <span className="task-item-body-text">{todo.title}</span>
+        <span data-testid="task-item-body-text" className="task-item-body-text">
+          {todo.title}
+        </span>
         <input
+          data-testid="task-item-body-input"
           ref={inputRef}
           className="task-item-body-input"
           defaultValue={todo.title}
@@ -139,6 +144,7 @@ const TodoItem = ({ todo, onSave, onDelete, onToggleDone, onChangeMode }) => {
       </div>
       <div className="task-item-action ">
         <button
+          data-testid="btn-destroy"
           className="btn-reset btn-destroy icon"
           onClick={() => onDelete?.(todo.id)}
         ></button>
