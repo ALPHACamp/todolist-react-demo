@@ -9,7 +9,7 @@ const TodoCollection = ({
 }) => {
   return (
     <div>
-      {todos.map((todo) => {
+      {todos?.map((todo) => {
         return (
           <TodoItem
             key={todo.id}

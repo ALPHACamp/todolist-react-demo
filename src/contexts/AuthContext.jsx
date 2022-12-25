@@ -12,7 +12,7 @@ const defaultAuthContext = {
   logout: null,
 };
 
-const AuthContext = createContext(defaultAuthContext);
+export const AuthContext = createContext(defaultAuthContext);
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
             setPayload(null);
             setIsAuthenticated(false);
           }
+
           return success;
         },
         logout: () => {
