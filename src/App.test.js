@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('app initialize have transfer to login page', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const loginTitle = screen.getByText(/登入 Todo/);
+  expect(loginTitle).toBeInTheDocument();
 });
