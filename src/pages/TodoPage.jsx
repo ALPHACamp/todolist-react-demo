@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import { getTodos, createTodo, patchTodo, deleteTodo } from '../api/todos';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
+import useTodos from '../hooks/useTodos';
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [todos, setTodos] = useState([]);
   const navigate = useNavigate();
+  const { todos } = useTodos();
   const { isAuthenticated, currentMember } = useAuth();
 
   const todoNums = todos.length;
@@ -138,19 +139,6 @@ const TodoPage = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    const getTodosAsync = async () => {
-      try {
-        const todos = await getTodos();
-
-        setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getTodosAsync();
-  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
