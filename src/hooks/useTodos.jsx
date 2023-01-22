@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getTodos, createTodo } from '../api/todos';
 
 const useTodos = () => {
   const [todos, setTodos] = useState([]);
 
-  const createTodos = async (todoItem) => {
+  const addTodo = async (todoItem) => {
     try {
       const data = await createTodo({
         title: todoItem,
@@ -42,7 +42,7 @@ const useTodos = () => {
 
   return {
     todos,
-    create: createTodos,
+    create: addTodo,
   };
 };
 

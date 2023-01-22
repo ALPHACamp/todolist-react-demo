@@ -1,7 +1,7 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getTodos, createTodo, patchTodo, deleteTodo } from '../api/todos';
+import { patchTodo, deleteTodo } from '../api/todos';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 import useTodos from '../hooks/useTodos';
@@ -9,7 +9,7 @@ import useTodos from '../hooks/useTodos';
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { todos } = useTodos();
+  const { todos, create: addTodo } = useTodos();
   const { isAuthenticated, currentMember } = useAuth();
 
   const todoNums = todos.length;
@@ -24,51 +24,7 @@ const TodoPage = () => {
     }
 
     try {
-      const data = await createTodo({
-        title: inputValue,
-        isDone: false,
-      });
-
-      setTodos((prevTodos) => {
-        return [
-          ...prevTodos,
-          {
-            id: data.id,
-            title: data.title,
-            isDone: data.isDone,
-            isEdit: false,
-          },
-        ];
-      });
-
-      setInputValue('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleKeyDown = async () => {
-    if (inputValue.length === 0) {
-      return;
-    }
-
-    try {
-      const data = await createTodo({
-        title: inputValue,
-        isDone: false,
-      });
-
-      setTodos((prevTodos) => {
-        return [
-          ...prevTodos,
-          {
-            id: data.id,
-            title: data.title,
-            isDone: data.isDone,
-            isEdit: false,
-          },
-        ];
-      });
-
+      await addTodo(inputValue);
       setInputValue('');
     } catch (error) {
       console.error(error);
@@ -153,7 +109,7 @@ const TodoPage = () => {
         inputValue={inputValue}
         onChange={handleChange}
         onAddTodo={handleAddTodo}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleAddTodo}
       />
       <TodoCollection
         todos={todos}
