@@ -1,8 +1,31 @@
 import { useState } from 'react';
-import { getTodos } from '../api/todos';
+import { getTodos, createTodo } from '../api/todos';
 
 const useTodos = () => {
   const [todos, setTodos] = useState([]);
+
+  const createTodos = async (todoItem) => {
+    try {
+      const data = await createTodo({
+        title: todoItem,
+        isDone: false,
+      });
+
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: data.title,
+            isDone: data.isDone,
+            isEdit: false,
+          },
+        ];
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const getTodosAsync = async () => {
@@ -19,6 +42,7 @@ const useTodos = () => {
 
   return {
     todos,
+    create: createTodos,
   };
 };
 
