@@ -106,7 +106,7 @@ const TodoItem = ({ todo, onSave, onDelete, onToggleDone, onChangeMode }) => {
   const inputRef = useRef(null);
   const handleKeyDown = (event) => {
     if (inputRef.current.value.length > 0 && event.key === 'Enter') {
-      onSave?.({ id: todo.id, title: inputRef.current.value });
+      onSave?.({ id: todo.id, title: inputRef.current.value, isEdit: false });
     }
 
     if (event.key === 'Escape') {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getTodos, createTodo } from '../api/todos';
+import { getTodos, createTodo, patchTodo } from '../api/todos';
 
 const useTodos = () => {
   const [todos, setTodos] = useState([]);
@@ -27,6 +27,39 @@ const useTodos = () => {
     }
   };
 
+  const updateTodo = async (newTodoItem) => {
+    const currentTodo = todos.find((todo) => todo.id === newTodoItem.id);
+    try {
+      await patchTodo({ ...currentTodo, ...newTodoItem });
+      setTodos((prevTodos) => {
+        return prevTodos.map((todo) => {
+          if (todo.id === newTodoItem.id) {
+            return {
+              ...todo,
+              ...newTodoItem,
+            };
+          }
+          return todo;
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const changeMode = (newTodoItem) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo.id === newTodoItem.id) {
+          return {
+            ...todo,
+            ...newTodoItem,
+          };
+        }
+        return { ...todo, isEdit: false };
+      });
+    });
+  };
+
   useEffect(() => {
     const getTodosAsync = async () => {
       try {
@@ -43,6 +76,8 @@ const useTodos = () => {
   return {
     todos,
     create: addTodo,
+    update: updateTodo,
+    changeMode,
   };
 };
 

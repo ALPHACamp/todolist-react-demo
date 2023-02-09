@@ -1,7 +1,7 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { patchTodo, deleteTodo } from '../api/todos';
+import { deleteTodo } from '../api/todos';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 import useTodos from '../hooks/useTodos';
@@ -9,7 +9,7 @@ import useTodos from '../hooks/useTodos';
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { todos, create: addTodo } = useTodos();
+  const { todos, create: addTodo, update: updateTodo, changeMode } = useTodos();
   const { isAuthenticated, currentMember } = useAuth();
 
   const todoNums = todos.length;
@@ -35,54 +35,20 @@ const TodoPage = () => {
     const currentTodo = todos.find((todo) => todo.id === id);
 
     try {
-      await patchTodo({
+      await updateTodo({
         id,
         isDone: !currentTodo.isDone,
-      });
-
-      setTodos((prevTodos) => {
-        return prevTodos.map((todo) => {
-          if (todo.id === id) {
-            return {
-              ...todo,
-              isDone: !todo.isDone,
-            };
-          }
-          return todo;
-        });
       });
     } catch (error) {
       console.error(error);
     }
   };
   const handleChangeMode = ({ id, isEdit }) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            isEdit,
-          };
-        }
-
-        return { ...todo, isEdit: false };
-      });
-    });
+    changeMode({ id, isEdit });
   };
-  const handleSave = async ({ id, title }) => {
+  const handleSave = async ({ id, title, isEdit }) => {
     try {
-      await patchTodo({
-        id,
-        title,
-      });
-      setTodos((prevTodos) => {
-        return prevTodos.map((todo) => {
-          if (todo.id === id) {
-            return { ...todo, title, isEdit: false };
-          }
-          return todo;
-        });
-      });
+      await updateTodo({ id, title, isEdit });
     } catch (error) {
       console.error(error);
     }
