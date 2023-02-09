@@ -1,7 +1,6 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { deleteTodo } from '../api/todos';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 import useTodos from '../hooks/useTodos';
@@ -9,7 +8,13 @@ import useTodos from '../hooks/useTodos';
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { todos, create: addTodo, update: updateTodo, changeMode } = useTodos();
+  const {
+    todos,
+    create: addTodo,
+    update: updateTodo,
+    changeMode,
+    delete: deleteTodo,
+  } = useTodos();
   const { isAuthenticated, currentMember } = useAuth();
 
   const todoNums = todos.length;
@@ -56,7 +61,6 @@ const TodoPage = () => {
   const handleDelete = async (id) => {
     try {
       await deleteTodo(id);
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     } catch (error) {
       console.error(error);
     }

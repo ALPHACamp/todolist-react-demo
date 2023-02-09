@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getTodos, createTodo, patchTodo } from '../api/todos';
+import { getTodos, createTodo, patchTodo, deleteTodo } from '../api/todos';
 
 const useTodos = () => {
   const [todos, setTodos] = useState([]);
@@ -60,6 +60,15 @@ const useTodos = () => {
     });
   };
 
+  const removeTodo = async (id) => {
+    try {
+      await deleteTodo(id);
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const getTodosAsync = async () => {
       try {
@@ -77,6 +86,7 @@ const useTodos = () => {
     todos,
     create: addTodo,
     update: updateTodo,
+    delete: removeTodo,
     changeMode,
   };
 };
